@@ -1,0 +1,216 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+@import "@fontsource-variable/geist";
+@import "@fontsource-variable/geist-mono";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-hairline: var(--hairline);
+  --font-sans: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, monospace;
+  --font-display: "Geist Variable", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.25rem; /* Sleeker, less rounded borders for premium consultancy style */
+  --background: #050505;
+  --surface: #0D0D0D;
+  --surface-elevated: #151515;
+  --hairline: rgba(255, 255, 255, 0.06);
+  --foreground: #FFFFFF;
+  --card: #0D0D0D;
+  --card-foreground: #FFFFFF;
+  --popover: #0D0D0D;
+  --popover-foreground: #FFFFFF;
+  --primary: #EAB308; /* Premium Amber/Gold accent used sparingly */
+  --primary-foreground: #050505;
+  --secondary: #151515;
+  --secondary-foreground: #FFFFFF;
+  --muted: #151515;
+  --muted-foreground: #A1A1AA;
+  --accent: #EAB308;
+  --accent-foreground: #050505;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --border: rgba(255, 255, 255, 0.06);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: rgba(234, 179, 8, 0.3);
+}
+
+.dark {
+  --background: #050505;
+  --surface: #0D0D0D;
+  --surface-elevated: #151515;
+  --hairline: rgba(255, 255, 255, 0.06);
+  --foreground: #FFFFFF;
+  --card: #0D0D0D;
+  --card-foreground: #FFFFFF;
+  --popover: #0D0D0D;
+  --popover-foreground: #FFFFFF;
+  --primary: #EAB308;
+  --primary-foreground: #050505;
+  --secondary: #151515;
+  --secondary-foreground: #FFFFFF;
+  --muted: #151515;
+  --muted-foreground: #A1A1AA;
+  --accent: #EAB308;
+  --accent-foreground: #050505;
+  --border: rgba(255, 255, 255, 0.06);
+  --input: rgba(255, 255, 255, 0.08);
+  --ring: rgba(234, 179, 8, 0.3);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  html {
+    background-color: #050505;
+    color: #FFFFFF;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    overflow-x: hidden;
+  }
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    letter-spacing: -0.035em;
+    font-weight: 500;
+  }
+}
+
+/* Premium Typography Utilities */
+@utility display-xl {
+  font-size: clamp(3.2rem, 9.5vw, 9.5rem);
+  line-height: 0.9;
+  letter-spacing: -0.045em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+@utility display-lg {
+  font-size: clamp(2.5rem, 5.5vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  font-weight: 500;
+}
+@utility display-md {
+  font-size: clamp(1.8rem, 3.2vw, 2.75rem);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  font-weight: 500;
+}
+@utility eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-muted-foreground);
+}
+@utility hairline {
+  height: 1px;
+  background: var(--color-hairline);
+  width: 100%;
+}
+@utility container-page {
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: clamp(1.5rem, 5vw, 4.5rem);
+  max-width: 90rem;
+}
+@utility link-underline {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  &:hover {
+    background-size: 100% 1px;
+  }
+}
+
+/* Cybersecurity Subtle Design Accents */
+@utility cyber-grid {
+  background-size: 60px 60px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+}
+
+@utility cyber-dots {
+  background-size: 20px 20px;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+}
+
+@utility scanline {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(234, 179, 8, 0.15), transparent);
+    animation: scan 12s linear infinite;
+    pointer-events: none;
+  }
+}
+
+@keyframes scan {
+  0% { top: 0%; }
+  100% { top: 100%; }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@utility marquee {
+  animation: marquee 35s linear infinite;
+}
+
+/* Premium Card hover effects */
+@utility hover-card-premium {
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  &:hover {
+    border-color: rgba(234, 179, 8, 0.25);
+    background-color: var(--color-surface-elevated);
+  }
+}
