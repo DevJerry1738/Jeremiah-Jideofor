@@ -1,0 +1,148 @@
+import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
+import { R as Reveal } from "./Reveal-BTaSxUZT.mjs";
+const projects = [{
+  n: "01",
+  name: "NUT",
+  title: "Nigeria Union of Teachers — Website Modernization",
+  sector: "Non-Profit · Education · Labour Union",
+  year: "2024",
+  overview: "A complete website modernization for Africa's first teachers' union (established 1931), representing 500k+ teachers across Nigeria's 36 states. Migrated from legacy tech stack to modern full-stack architecture with self-managed authentication, comprehensive admin dashboard, and member engagement tools.",
+  challenge: "The Nigeria Union of Teachers operated with an outdated legacy website lacking content management capabilities, modern authentication infrastructure, and member engagement tools. The organization needed a digital platform befitting their scale and influence while enabling staff to independently manage content.",
+  research: "Conducted stakeholder interviews with NUT leadership and staff to understand content workflows, member communication patterns, and accessibility needs across 500k+ teachers in diverse regions. Analyzed competing educational union digital presences to benchmark feature expectations.",
+  strategy: "Design a modern full-stack platform with Supabase Auth replacing third-party OAuth, implement a comprehensive Admin Dashboard for content management, migrate from MySQL to PostgreSQL for scalability, and build animated, responsive UI for engagement. Prioritize independence from developer intervention for ongoing content updates.",
+  design: "Crafted responsive layouts with GSAP scroll-triggered animations, live news ticker, event carousel, and animated statistics counters. Designed clean admin dashboard with intuitive navigation for non-technical staff managing blogs, events, and member applications.",
+  development: "Built with React 19, TypeScript, Vite, TailwindCSS, shadcn/ui, Supabase, tRPC, and GSAP. Implemented 8-table database schema with Row-Level Security policies, blog/news management system, event scheduling, member join flow with email verification, and newsletter subscription handling.",
+  security: "Implemented Supabase Auth with email/password and OAuth (Google/GitHub) support. Row-Level Security policies enforce database-level access control. JWT tokens over HTTP-only cookies. Admin dashboard protected behind role-based access control. Newsletter submissions validated with Zod schemas.",
+  outcome: "Delivered a modern, animated platform serving 500k+ teachers with independent admin dashboard enabling content management without developer involvement. Live news ticker automatically fetches from database with fallback to static content. Event management and member engagement tools functional. Platform live at nutng.org with positive reception from organizational leadership.",
+  lessons: "Content management independence is critical for organizational adoption. Building feature flags and fallback systems ensures graceful degradation when content is missing. GSAP animations significantly improve perceived performance and user engagement on educational platforms.",
+  stack: ["React 19", "TypeScript", "Vite", "Supabase", "PostgreSQL", "TailwindCSS", "GSAP", "tRPC", "Row-Level Security"]
+}, {
+  n: "02",
+  name: "YIRH",
+  title: "Youth in Research Hub — Website & Headless CMS",
+  sector: "Non-Profit · Academic Research · Public Health",
+  year: "2024",
+  overview: "A full-stack organizational website combined with a built-in headless CMS, enabling non-technical staff (admins/editors) to independently manage all site content including publications, team profiles, blog posts, and applications without requiring developer intervention.",
+  challenge: "YIRH lacked a digital presence to showcase research publications, team members, and attract collaborators. The organization needed independent content management capabilities enabling administrative staff to update the website autonomously, reducing dependency on technical resources.",
+  research: "Interviewed YIRH team members to understand content types (publications, team info, blog posts), user personas (researchers, academic partners, general public), and administrative workflows. Researched headless CMS architectures and role-based access patterns used by research-focused nonprofits.",
+  strategy: "Architect a Supabase-native platform combining public-facing website with secured Admin Dashboard. Implement role-based access (Admin for full control, Editor for content-only), database-level Row-Level Security policies, and containerization for production deployment. Migrate from backend-heavy architecture to simplified React Query hooks.",
+  design: "Created beautiful, animated public interface with hero section, publication showcase, team directory with department filtering, and blog with category navigation. Designed 8-tab Admin Dashboard with intuitive content management, file uploads, preview functionality, and WYSIWYG editing.",
+  development: "Built with React 19, TypeScript, Vite, Supabase, React Query (7 custom hooks for data management), Markdown editor integration, GSAP animations, and Docker containerization. 8-table PostgreSQL schema with 12+ performance indexes and RLS policies. File storage for publications and avatars via Supabase Storage.",
+  security: "Supabase Auth with role-based access control (user/editor/admin). 12+ Row-Level Security policies enforcing access at database level. Protected routes with role validation. Multi-bucket file storage separation. Zod validation for all form inputs. Dark mode theme toggle persisted securely.",
+  outcome: "Delivered fully functional CMS enabling YIRH staff to independently manage publications, team profiles, blog posts, and join applications. Secure role-based access prevents unauthorized modifications. Beautiful animations and light/dark theme support create professional research-focused interface. Production-ready with Docker containerization and Nginx reverse proxy configuration.",
+  lessons: "Supabase-native architecture eliminates backend complexity while maintaining security. Migrating from Hono/tRPC to React Query hooks reduced backend code by 30% while improving developer experience. Database-level security policies provide defense-in-depth that UI controls alone cannot guarantee.",
+  stack: ["React 19", "TypeScript", "Supabase", "PostgreSQL", "React Query", "GSAP", "Markdown Editor", "Docker", "Row-Level Security", "TailwindCSS"]
+}, {
+  n: "03",
+  name: "PhishGuard",
+  title: "PhishGuard NG — Phishing Simulation & Security Training Platform",
+  sector: "Cybersecurity · Security Awareness · Corporate Training",
+  year: "2023",
+  overview: "An interactive phishing simulation platform enabling organizations to run safe, simulated phishing campaigns for security awareness training. Features individual click tracking, immediate educational intervention, and comprehensive performance analytics to measure and improve organizational security posture.",
+  challenge: "Phishing attacks are the leading entry point for corporate data breaches, yet traditional static security training lacks impact and fails to create behavioral change. Organizations needed an interactive testing platform to identify vulnerable employees and provide immediate, targeted training during the critical 'teachable moment.'",
+  research: "Researched phishing attack vectors, behavioral security training effectiveness, and corporate security awareness program gaps. Analyzed how immediate intervention immediately after a 'failure' significantly improves learning outcomes versus delayed training. Studied tracking mechanisms that don't harvest credentials.",
+  strategy: "Create interactive platform enabling campaign-based phishing simulations with unique tracking URLs per recipient. On link click, immediately redirect to educational warning page with training video and behavioral checklist. Implement role-based access (Admin/Analyst/Viewer) with department-level performance analytics and CSV export.",
+  design: "Admin interface for campaign creation with template selection and target group configuration. Clean dashboard displaying real-time click metrics per department. Employee landing page with clear warning message and embedded training content. Reports interface with filtering and CSV download functionality.",
+  development: "Built with React.js frontend, Node.js/Express backend, MongoDB for data persistence. Implemented campaign logic generating unique tracking URLs, click handler that captures metadata without storing credentials, real-time analytics calculation, and JWT-based session management.",
+  security: "Strict role-based access control preventing unauthorized campaign creation or data viewing. JWT authentication with secure token refresh. Tracking URLs designed to capture clicks without harvesting credentials or passwords. MongoDB data validation at API layer. Bcrypt password hashing for admin accounts.",
+  outcome: "Fully functional security awareness platform successfully implemented as core Master's research project at Nigerian Defence Academy Postgraduate School. Demonstrates effectiveness of active phishing testing combined with immediate feedback in improving organizational security posture. Validated through academic evaluation and deployed for institutional use.",
+  lessons: "The 'teachable moment' immediately after a security failure is critical for behavioral change. Systems that capture failure data while providing immediate education are far more effective than post-hoc training sessions weeks later. Tracking mechanisms must never harvest credentials—the platform's value is awareness, not credential theft.",
+  stack: ["React.js", "Node.js", "Express", "MongoDB", "JWT", "Bcrypt", "RBAC", "Real-time Analytics", "Email Integration"]
+}];
+function WorkPage() {
+  const [activeProject, setActiveProject] = reactExports.useState("01");
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "pt-36 md:pt-48 pb-16 container-page relative scanline", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pointer-events-none absolute inset-0 cyber-grid opacity-[0.15]" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "eyebrow mb-6", children: "[ ENGAGEMENT PORTFOLIO ]" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "display-xl max-w-[20ch] font-bold text-foreground", children: "SELECTED CASE STUDIES" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-10 max-w-2xl text-muted-foreground text-lg font-light leading-relaxed", children: "Detailed project journals documenting scope, technical strategy, security execution, and business impact. Scoped as professional consulting engagements." }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-16 flex flex-wrap gap-2 border-b border-hairline pb-8 font-mono text-xs", children: projects.map((p) => /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: () => setActiveProject(p.n), className: `px-5 py-3 rounded border transition-all ${activeProject === p.n ? "bg-primary text-primary-foreground border-primary" : "border-hairline hover:bg-surface/50 text-muted-foreground hover:text-foreground"}`, children: [
+        "CASE ",
+        p.n,
+        " — ",
+        p.name.toUpperCase()
+      ] }, p.n)) })
+    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "hairline" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("section", { className: "container-page py-16 md:py-24 relative", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 cyber-dots opacity-[0.2] pointer-events-none" }),
+      projects.filter((p) => p.n === activeProject).map((p) => /* @__PURE__ */ jsxRuntimeExports.jsx(Reveal, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("article", { className: "grid lg:grid-cols-12 gap-12 lg:gap-20", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "lg:col-span-4 space-y-8", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "border border-hairline bg-surface/30 p-8 rounded relative overflow-hidden", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-mono text-xs text-primary", children: "[ ENGAGEMENT SPECS ]" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-3xl font-display font-semibold uppercase tracking-tight mt-4", children: p.name }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-mono text-muted-foreground/80 mt-1", children: p.title }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mt-8 space-y-4 font-mono text-xs text-muted-foreground border-t border-hairline/50 pt-6", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "SECTOR:" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-foreground", children: p.sector })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "YEAR SHIPPED:" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-foreground", children: p.year })
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { children: "INTEGRITY VERIFICATION:" }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-emerald-500 font-semibold", children: "SUCCESS" })
+              ] })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "border border-hairline bg-surface/10 p-6 rounded", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "eyebrow mb-4", children: "Integrated Stack" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex flex-wrap gap-2", children: p.stack.map((s) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-mono text-[0.62rem] uppercase tracking-widest bg-background border border-hairline rounded px-2.5 py-1 text-muted-foreground", children: s }, s)) })
+          ] })
+        ] }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "lg:col-span-8 space-y-12", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "border-b border-hairline pb-6 bg-primary/5 p-6 rounded border-l-2 border-l-primary", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "eyebrow text-primary mb-2", children: "01 / ENGAGEMENT OVERVIEW" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-base md:text-lg text-foreground font-light leading-relaxed", children: p.overview })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid sm:grid-cols-2 gap-10", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "eyebrow border-b border-hairline pb-2 mb-3", children: "02 / THE CHALLENGE" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground leading-relaxed font-light", children: p.challenge })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "eyebrow border-b border-hairline pb-2 mb-3", children: "03 / WORKFLOW RESEARCH" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground leading-relaxed font-light", children: p.research })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid sm:grid-cols-2 gap-10", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "eyebrow border-b border-hairline pb-2 mb-3", children: "04 / STRATEGIC PLAN" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground leading-relaxed font-light", children: p.strategy })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "eyebrow border-b border-hairline pb-2 mb-3", children: "05 / USER EXPERIENCE DESIGN" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground leading-relaxed font-light", children: p.design })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid sm:grid-cols-2 gap-10", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "eyebrow border-b border-hairline pb-2 mb-3", children: "06 / CORE DEVELOPMENT" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground leading-relaxed font-light", children: p.development })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "border border-red-500/20 bg-red-500/5 p-4 rounded", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "eyebrow text-red-500/90 border-b border-red-500/10 pb-2 mb-3", children: "07 / SECURITY CONSIDERATIONS" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-foreground/90 leading-relaxed font-light", children: p.security })
+            ] })
+          ] }),
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid sm:grid-cols-2 gap-10 border-t border-hairline pt-10", children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "border border-emerald-500/20 bg-emerald-500/5 p-4 rounded", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "eyebrow text-emerald-500 border-b border-emerald-500/10 pb-2 mb-3", children: "08 / MEASURABLE OUTCOME" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-foreground leading-relaxed font-medium", children: p.outcome })
+            ] }),
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "eyebrow border-b border-hairline pb-2 mb-3", children: "09 / RETROSPECTIVE LESSONS" }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground leading-relaxed font-light", children: p.lessons })
+            ] })
+          ] })
+        ] })
+      ] }) }, p.n))
+    ] })
+  ] });
+}
+export {
+  WorkPage as component
+};
