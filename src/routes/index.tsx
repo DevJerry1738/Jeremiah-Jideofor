@@ -56,10 +56,15 @@ const services = [
   { t: "Technology Consulting", d: "Strategic advisory on software stack decisions, system refactoring roadmaps, and phased digital transformations." },
 ];
 
-const insights = [
-  { cat: "Security", title: "Understanding Least Privilege: Designing Secure Access Control in Modern Business Software.", read: "5 min read" },
-  { cat: "Product Development", title: "Replacing Spreadsheets: How Custom Operations Software Pays Back Technical Debt.", read: "6 min read" },
-  { cat: "Business Technology", title: "Edge Delivery & Security: Minimizing the Attack Surface of Corporate Web Assets.", read: "4 min read" },
+const insights: Array<{
+  cat: string;
+  title: string;
+  read: string;
+  slug: "/insights/least-privilege" | "/insights/replacing-spreadsheets" | "/insights/edge-delivery-security";
+}> = [
+  { cat: "Security", title: "Understanding Least Privilege: Designing Secure Access Control in Modern Business Software.", read: "5 min read", slug: "/insights/least-privilege" },
+  { cat: "Product Development", title: "Replacing Spreadsheets: How Custom Operations Software Pays Back Technical Debt.", read: "6 min read", slug: "/insights/replacing-spreadsheets" },
+  { cat: "Business Technology", title: "Edge Delivery & Security: Minimizing the Attack Surface of Corporate Web Assets.", read: "4 min read", slug: "/insights/edge-delivery-security" },
 ];
 
 function Index() {
@@ -326,26 +331,31 @@ function Index() {
               <p className="eyebrow mb-4">[ 04 / INSIGHTS & JOURNAL ]</p>
               <h2 className="display-lg uppercase font-semibold">Strategic Thinking.</h2>
             </div>
-            <span className="text-xs font-mono uppercase tracking-widest text-muted-foreground/60">[ UPDATED WEEKLY ]</span>
+            <Link to="/insights" className="text-xs font-mono uppercase tracking-widest text-muted-foreground hover:text-foreground link-underline transition-colors">
+              View All Articles →
+            </Link>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
             {insights.map((p, idx) => (
               <Reveal key={p.title} delay={idx * 150}>
-                <div className="border border-hairline bg-background p-8 hover-card-premium h-full flex flex-col justify-between">
+                <Link
+                  to={p.slug}
+                  className="group border border-hairline bg-background p-8 hover-card-premium h-full flex flex-col justify-between transition-all hover:bg-surface/50"
+                >
                   <div>
                     <span className="font-mono text-[0.62rem] text-primary tracking-widest uppercase border border-primary/20 rounded px-2 py-0.5">
                       {p.cat}
                     </span>
-                    <h3 className="text-lg font-semibold uppercase tracking-tight mt-6 leading-snug">
+                    <h3 className="text-lg font-semibold uppercase tracking-tight mt-6 leading-snug group-hover:text-primary transition-colors">
                       {p.title}
                     </h3>
                   </div>
-                  <div className="mt-12 flex justify-between items-center font-mono text-[0.68rem] text-muted-foreground border-t border-hairline pt-4">
+                  <div className="mt-12 flex justify-between items-center font-mono text-[0.68rem] text-muted-foreground border-t border-hairline pt-4 group-hover:text-primary/60 transition-colors">
                     <span>ARTICLE // READ</span>
                     <span>{p.read}</span>
                   </div>
-                </div>
+                </Link>
               </Reveal>
             ))}
           </div>

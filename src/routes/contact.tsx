@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Reveal } from "@/components/Reveal";
 import { useState } from "react";
+import { submitContactForm } from "@/lib/api/contact.functions";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -20,21 +21,35 @@ const topics = ["Custom Platform", "Security Audit", "Technical Advisory", "Part
 
 function ContactPage() {
   const [topic, setTopic] = useState<(typeof topics)[number]>("Custom Platform");
+  const [submitting, setSubmitting] = useState(false);
   const [sent, setSent] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSubmitting(true);
+    setError(null);
     const form = e.currentTarget;
     const data = new FormData(form);
-    const name = data.get("name");
-    const email = data.get("email");
-    const org = data.get("org");
-    const message = data.get("message");
-    const body = `Topic: ${topic}\nOrganization: ${org}\n\n${message}\n\n— ${name} (${email})`;
-    window.location.href = `mailto:jideoforjeremiah@gmail.com?subject=${encodeURIComponent(
-      `[Advisory] ${topic} Enquiry — ${org || name}`
-    )}&body=${encodeURIComponent(body)}&cc=${encodeURIComponent(String(email ?? ""))}`;
-    setSent(true);
+
+    try {
+      await submitContactForm({
+        data: {
+          name: String(data.get("name") ?? ""),
+          email: String(data.get("email") ?? ""),
+          org: String(data.get("org") ?? ""),
+          topic,
+          message: String(data.get("message") ?? ""),
+        },
+      });
+      setSent(true);
+      form.reset();
+    } catch (err: any) {
+      console.error(err);
+      setError(err?.message || "Something went wrong while routing your enquiry.");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -66,13 +81,13 @@ function ContactPage() {
                 <ul className="space-y-6 mt-6 font-mono text-sm">
                   <li>
                     <p className="text-[0.62rem] text-muted-foreground uppercase tracking-widest mb-1">Secure Email</p>
-                    <a href="mailto:jideoforjeremiah@gmail.com" className="text-base font-semibold text-foreground hover:text-primary transition-colors link-underline">
-                      jideoforjeremiah@gmail.com
+                    <a href="mailto:devjerry1738@gmail.com" className="text-base font-semibold text-foreground hover:text-primary transition-colors link-underline">
+                      devjerry1738@gmail.com
                     </a>
                   </li>
                   <li>
                     <p className="text-[0.62rem] text-muted-foreground uppercase tracking-widest mb-1">WhatsApp Endpoint</p>
-                    <a href="https://wa.me/" target="_blank" rel="noreferrer" className="text-base font-semibold text-foreground hover:text-primary transition-colors link-underline">
+                    <a href="https://wa.me/2349011448616" target="_blank" rel="noreferrer" className="text-base font-semibold text-foreground hover:text-primary transition-colors link-underline">
                       Establish Secure Chat →
                     </a>
                   </li>
@@ -85,12 +100,12 @@ function ContactPage() {
                 <span className="font-mono text-xs text-primary">[ ELSEWHERE ]</span>
                 <ul className="space-y-3 mt-6 font-mono text-xs uppercase tracking-wider">
                   <li>
-                    <a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground link-underline">
+                    <a href="https://www.linkedin.com/in/onyeka-jideofor-7539b33ab/" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground link-underline">
                       LinkedIn Professional Profile
                     </a>
                   </li>
                   <li>
-                    <a href="https://github.com/" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground link-underline">
+                    <a href="https://github.com/DevJerry1738/" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground link-underline">
                       GitHub Source Log
                     </a>
                   </li>
@@ -121,6 +136,7 @@ function ContactPage() {
                         type="button"
                         key={t}
                         onClick={() => setTopic(t)}
+                        disabled={submitting}
                         className={`px-4 py-2.5 rounded font-mono text-xs border transition-all ${
                           topic === t
                             ? "bg-primary text-primary-foreground border-primary"
@@ -152,13 +168,27 @@ function ContactPage() {
                   />
                 </div>
 
+                {/* Feedback Alerts */}
+                {sent && (
+                  <div className="p-4 bg-emerald-500/10 border border-emerald-500/30 text-emerald-500 text-xs font-mono rounded">
+                    [ SUCCESS ] YOUR ENQUIRY HAS BEEN SECURELY ROUTED TO DEVELOPMENT.
+                  </div>
+                )}
+
+                {error && (
+                  <div className="p-4 bg-red-500/10 border border-red-500/30 text-red-500 text-xs font-mono rounded">
+                    [ ERROR ] {error.toUpperCase()}
+                  </div>
+                )}
+
                 {/* Submit button */}
                 <div className="pt-4 flex flex-col sm:flex-row items-center justify-between gap-4">
                   <button
                     type="submit"
-                    className="w-full sm:w-auto group inline-flex items-center justify-center gap-3 bg-primary text-primary-foreground rounded-full pl-7 pr-2 py-2 text-xs font-mono uppercase tracking-wider font-semibold hover:opacity-90 transition-all cursor-pointer"
+                    disabled={submitting}
+                    className="w-full sm:w-auto group inline-flex items-center justify-center gap-3 bg-primary text-primary-foreground rounded-full pl-7 pr-2 py-2 text-xs font-mono uppercase tracking-wider font-semibold hover:opacity-90 transition-all cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {sent ? "Opening System Email…" : "Submit Enquiry"}
+                    {submitting ? "Routing Enquiry..." : "Submit Enquiry"}
                     <span className="w-9 h-9 rounded-full bg-primary-foreground text-primary inline-flex items-center justify-center transition-transform group-hover:rotate-45">
                       <svg width="14" height="14" viewBox="0 0 12 12" fill="none">
                         <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />

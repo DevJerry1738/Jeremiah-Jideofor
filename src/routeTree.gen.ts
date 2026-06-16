@@ -12,9 +12,13 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WorkRouteImport } from './routes/work'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as InsightsRouteImport } from './routes/insights'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as InsightsReplacingSpreadsheetsRouteImport } from './routes/insights.replacing-spreadsheets'
+import { Route as InsightsLeastPrivilegeRouteImport } from './routes/insights.least-privilege'
+import { Route as InsightsEdgeDeliverySecurityRouteImport } from './routes/insights.edge-delivery-security'
 
 const WorkRoute = WorkRouteImport.update({
   id: '/work',
@@ -29,6 +33,11 @@ const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InsightsRoute = InsightsRouteImport.update({
+  id: '/insights',
+  path: '/insights',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -46,31 +55,60 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InsightsReplacingSpreadsheetsRoute =
+  InsightsReplacingSpreadsheetsRouteImport.update({
+    id: '/replacing-spreadsheets',
+    path: '/replacing-spreadsheets',
+    getParentRoute: () => InsightsRoute,
+  } as any)
+const InsightsLeastPrivilegeRoute = InsightsLeastPrivilegeRouteImport.update({
+  id: '/least-privilege',
+  path: '/least-privilege',
+  getParentRoute: () => InsightsRoute,
+} as any)
+const InsightsEdgeDeliverySecurityRoute =
+  InsightsEdgeDeliverySecurityRouteImport.update({
+    id: '/edge-delivery-security',
+    path: '/edge-delivery-security',
+    getParentRoute: () => InsightsRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/insights': typeof InsightsRouteWithChildren
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/work': typeof WorkRoute
+  '/insights/edge-delivery-security': typeof InsightsEdgeDeliverySecurityRoute
+  '/insights/least-privilege': typeof InsightsLeastPrivilegeRoute
+  '/insights/replacing-spreadsheets': typeof InsightsReplacingSpreadsheetsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/insights': typeof InsightsRouteWithChildren
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/work': typeof WorkRoute
+  '/insights/edge-delivery-security': typeof InsightsEdgeDeliverySecurityRoute
+  '/insights/least-privilege': typeof InsightsLeastPrivilegeRoute
+  '/insights/replacing-spreadsheets': typeof InsightsReplacingSpreadsheetsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/insights': typeof InsightsRouteWithChildren
   '/services': typeof ServicesRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/work': typeof WorkRoute
+  '/insights/edge-delivery-security': typeof InsightsEdgeDeliverySecurityRoute
+  '/insights/least-privilege': typeof InsightsLeastPrivilegeRoute
+  '/insights/replacing-spreadsheets': typeof InsightsReplacingSpreadsheetsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -78,25 +116,44 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/insights'
     | '/services'
     | '/sitemap.xml'
     | '/work'
+    | '/insights/edge-delivery-security'
+    | '/insights/least-privilege'
+    | '/insights/replacing-spreadsheets'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/services' | '/sitemap.xml' | '/work'
+  to:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/insights'
+    | '/services'
+    | '/sitemap.xml'
+    | '/work'
+    | '/insights/edge-delivery-security'
+    | '/insights/least-privilege'
+    | '/insights/replacing-spreadsheets'
   id:
     | '__root__'
     | '/'
     | '/about'
     | '/contact'
+    | '/insights'
     | '/services'
     | '/sitemap.xml'
     | '/work'
+    | '/insights/edge-delivery-security'
+    | '/insights/least-privilege'
+    | '/insights/replacing-spreadsheets'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
+  InsightsRoute: typeof InsightsRouteWithChildren
   ServicesRoute: typeof ServicesRoute
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   WorkRoute: typeof WorkRoute
@@ -125,6 +182,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/insights': {
+      id: '/insights'
+      path: '/insights'
+      fullPath: '/insights'
+      preLoaderRoute: typeof InsightsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -146,13 +210,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/insights/replacing-spreadsheets': {
+      id: '/insights/replacing-spreadsheets'
+      path: '/replacing-spreadsheets'
+      fullPath: '/insights/replacing-spreadsheets'
+      preLoaderRoute: typeof InsightsReplacingSpreadsheetsRouteImport
+      parentRoute: typeof InsightsRoute
+    }
+    '/insights/least-privilege': {
+      id: '/insights/least-privilege'
+      path: '/least-privilege'
+      fullPath: '/insights/least-privilege'
+      preLoaderRoute: typeof InsightsLeastPrivilegeRouteImport
+      parentRoute: typeof InsightsRoute
+    }
+    '/insights/edge-delivery-security': {
+      id: '/insights/edge-delivery-security'
+      path: '/edge-delivery-security'
+      fullPath: '/insights/edge-delivery-security'
+      preLoaderRoute: typeof InsightsEdgeDeliverySecurityRouteImport
+      parentRoute: typeof InsightsRoute
+    }
   }
 }
+
+interface InsightsRouteChildren {
+  InsightsEdgeDeliverySecurityRoute: typeof InsightsEdgeDeliverySecurityRoute
+  InsightsLeastPrivilegeRoute: typeof InsightsLeastPrivilegeRoute
+  InsightsReplacingSpreadsheetsRoute: typeof InsightsReplacingSpreadsheetsRoute
+}
+
+const InsightsRouteChildren: InsightsRouteChildren = {
+  InsightsEdgeDeliverySecurityRoute: InsightsEdgeDeliverySecurityRoute,
+  InsightsLeastPrivilegeRoute: InsightsLeastPrivilegeRoute,
+  InsightsReplacingSpreadsheetsRoute: InsightsReplacingSpreadsheetsRoute,
+}
+
+const InsightsRouteWithChildren = InsightsRoute._addFileChildren(
+  InsightsRouteChildren,
+)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
+  InsightsRoute: InsightsRouteWithChildren,
   ServicesRoute: ServicesRoute,
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   WorkRoute: WorkRoute,

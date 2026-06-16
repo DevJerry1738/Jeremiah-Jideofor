@@ -214,3 +214,38 @@
     background-color: var(--color-surface-elevated);
   }
 }
+
+/* Article Prose Code Blocks */
+.prose-content pre {
+  display: block !important;
+  width: 100% !important;
+  white-space: pre !important;
+  overflow-x: auto !important;
+  word-wrap: normal !important;
+  word-break: normal !important;
+  background-color: var(--surface) !important;
+  border: 1px solid var(--hairline) !important;
+  padding: 1.25rem !important;
+  border-radius: var(--radius-md) !important;
+  font-family: var(--font-mono) !important;
+  color: var(--foreground) !important;
+  margin-block: 1.5rem !important;
+}
+
+.prose-content code {
+  font-family: var(--font-mono) !important;
+  font-size: 0.875em !important;
+  background-color: rgba(255, 255, 255, 0.05) !important;
+  padding: 0.2rem 0.4rem !important;
+  border-radius: var(--radius-sm) !important;
+  white-space: normal !important;
+}
+
+.prose-content pre code {
+  background-color: transparent !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  font-size: 0.875em !important;
+  white-space: pre !important;
+  display: block !important;
+}

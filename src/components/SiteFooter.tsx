@@ -20,10 +20,10 @@ export function SiteFooter() {
             
             <div className="mt-12 flex flex-col sm:flex-row items-start gap-4">
               <a
-                href="mailto:jideoforjeremiah@gmail.com"
+                href="mailto:devjerry1738@gmail.com"
                 className="group inline-flex items-center gap-4 border border-hairline hover:border-primary bg-surface/50 rounded-full pl-6 pr-2 py-2 text-xs font-mono uppercase tracking-wider transition-all"
               >
-                jideoforjeremiah@gmail.com
+                devjerry1738@gmail.com
                 <span className="w-10 h-10 rounded-full bg-primary text-primary-foreground inline-flex items-center justify-center transition-transform group-hover:rotate-45">
                   <svg width="14" height="14" viewBox="0 0 12 12" fill="none">
                     <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -32,7 +32,7 @@ export function SiteFooter() {
               </a>
               
               <a
-                href="https://wa.me/"
+                href="https://wa.me/2349011448616"
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center justify-center border border-hairline hover:border-foreground/40 rounded-full px-6 py-4 text-xs font-mono uppercase tracking-wider transition-colors"
@@ -56,10 +56,10 @@ export function SiteFooter() {
             <div>
               <p className="eyebrow mb-5">[ ELSEWHERE ]</p>
               <ul className="space-y-3 font-mono text-xs uppercase tracking-wider">
-                <li><a href="https://www.linkedin.com/" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground link-underline">LinkedIn</a></li>
-                <li><a href="https://github.com/" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground link-underline">GitHub</a></li>
-                <li><a href="https://wa.me/" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground link-underline">WhatsApp</a></li>
-                <li><a href="mailto:jideoforjeremiah@gmail.com" className="text-muted-foreground hover:text-foreground link-underline">Email Direct</a></li>
+                <li><a href="https://www.linkedin.com/in/onyeka-jideofor-7539b33ab/" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground link-underline">LinkedIn</a></li>
+                <li><a href="https://github.com/DevJerry1738/" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground link-underline">GitHub</a></li>
+                <li><a href="https://wa.me/2349011448616" target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-foreground link-underline">WhatsApp</a></li>
+                <li><a href="mailto:devjerry1738@gmail.com" className="text-muted-foreground hover:text-foreground link-underline">Email Direct</a></li>
               </ul>
             </div>
           </div>
