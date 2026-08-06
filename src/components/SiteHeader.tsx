@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { gsap, useGsap } from "@/hooks/useGsap";
 
 const links = [
   { to: "/work", label: "Engagements" },
@@ -11,6 +12,26 @@ const links = [
 export function SiteHeader() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const headerRef = useRef<HTMLElement | null>(null);
+
+  useGsap(
+    () => {
+      const ctx = gsap.context(() => {
+        if (!headerRef.current) return;
+
+        gsap.from(headerRef.current, {
+          opacity: 0,
+          y: -18,
+          duration: 0.7,
+          ease: "power3.out",
+        });
+      }, headerRef);
+
+      return () => ctx.revert();
+    },
+    [],
+    headerRef
+  );
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 12);
@@ -21,13 +42,14 @@ export function SiteHeader() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${
-        scrolled
-          ? "backdrop-blur-xl bg-background/80 border-hairline py-3 md:py-4"
-          : "bg-transparent border-transparent py-5 md:py-6"
-      }`}
-    >
-      <div className="container-page flex items-center justify-between">
+      ref={headerRef}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 border-b ${
+          scrolled
+            ? "backdrop-blur-xl bg-background/80 border-hairline py-3 md:py-4"
+            : "bg-transparent border-transparent py-5 md:py-6"
+        }`}
+      >
+        <div className="container-page flex items-center justify-between">
         {/* Brand Identity Logo */}
         <div className="flex items-center gap-6">
           <Link to="/" className="flex items-center gap-2.5 group">

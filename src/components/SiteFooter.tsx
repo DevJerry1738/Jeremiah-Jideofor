@@ -1,9 +1,38 @@
 import { Link } from "@tanstack/react-router";
+import { useRef } from "react";
+import { gsap, useGsap } from "@/hooks/useGsap";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
+  const footerRef = useRef<HTMLElement | null>(null);
+
+  useGsap(
+    () => {
+      const ctx = gsap.context(() => {
+        if (!footerRef.current) return;
+
+        gsap.from(footerRef.current, {
+          opacity: 0,
+          y: 24,
+          duration: 0.9,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: footerRef.current,
+            start: "top 95%",
+            toggleActions: "play none none none",
+            once: true,
+          },
+        });
+      }, footerRef);
+
+      return () => ctx.revert();
+    },
+    [],
+    footerRef
+  );
+
   return (
-    <footer className="border-t border-hairline mt-32 bg-surface/25 relative overflow-hidden">
+    <footer ref={footerRef} className="border-t border-hairline mt-32 bg-surface/25 relative overflow-hidden">
       {/* Decorative Blueprint dots */}
       <div className="absolute inset-0 cyber-dots pointer-events-none opacity-40" />
 

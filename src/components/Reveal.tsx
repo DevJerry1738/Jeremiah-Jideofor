@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
+import { prefersReducedMotion } from "@/hooks/useGsap";
 
 export function Reveal({
   children,
@@ -10,33 +11,53 @@ export function Reveal({
   className?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return;
-    const io = new IntersectionObserver(
+
+    const applyVisible = () => {
+      el.classList.add("reveal-visible");
+      el.classList.remove("reveal-hidden");
+    };
+
+    if (prefersReducedMotion) {
+      applyVisible();
+      return;
+    }
+
+    const isInViewport = (target: Element) => {
+      const rect = target.getBoundingClientRect();
+      return rect.top < window.innerHeight && rect.bottom > 0;
+    };
+
+    if (isInViewport(el)) {
+      applyVisible();
+      return;
+    }
+
+    const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-          io.disconnect();
-        }
+        if (!entry.isIntersecting) return;
+        applyVisible();
+        observer.disconnect();
       },
-      { threshold: 0.12, rootMargin: "0px 0px -40px 0px" }
+      {
+        threshold: 0.12,
+        rootMargin: "0px 0px -10% 0px",
+      }
     );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
+
+    observer.observe(el);
+
+    return () => observer.disconnect();
+  }, [delay]);
 
   return (
     <div
       ref={ref}
-      style={{
-        opacity: visible ? 1 : 0,
-        transform: visible ? "translateY(0)" : "translateY(28px)",
-        transition: `opacity 1s cubic-bezier(0.2,0.7,0.2,1) ${delay}ms, transform 1s cubic-bezier(0.2,0.7,0.2,1) ${delay}ms`,
-      }}
-      className={className}
+      className={`reveal-hidden ${className}`}
+      style={{ transitionDelay: `${delay / 1000}s` }}
     >
       {children}
     </div>
@@ -50,7 +71,12 @@ export function SplitReveal({ text, className = "" }: { text: string; className?
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(
-      ([e]) => { if (e.isIntersecting) { setVisible(true); io.disconnect(); } },
+      ([e]) => {
+        if (e.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
       { threshold: 0.2 }
     );
     io.observe(el);
@@ -65,7 +91,7 @@ export function SplitReveal({ text, className = "" }: { text: string; className?
             className="inline-block"
             style={{
               transform: visible ? "translateY(0)" : "translateY(110%)",
-              transition: `transform 0.9s cubic-bezier(0.2,0.7,0.2,1) ${i * 60}ms`,
+              transition: `transform 0.85s cubic-bezier(0.2,0.7,0.2,1) ${i * 50}ms`,
             }}
           >
             {w}

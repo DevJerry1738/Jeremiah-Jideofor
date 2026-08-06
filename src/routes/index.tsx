@@ -1,7 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Reveal, SplitReveal } from "@/components/Reveal";
+import { CardReveal } from "@/components/CardReveal";
 import { Marquee } from "@/components/Marquee";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { gsap, useGsap } from "@/hooks/useGsap";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -69,7 +71,71 @@ const insights: Array<{
 
 function Index() {
   const [time, setTime] = useState("");
-  
+  const heroRef = useRef<HTMLElement | null>(null);
+  const navStripRef = useRef<HTMLDivElement | null>(null);
+  const heroWordsRef = useRef<HTMLHeadingElement | null>(null);
+  const heroCopyRef = useRef<HTMLDivElement | null>(null);
+  const ctaRef = useRef<HTMLDivElement | null>(null);
+  const floatRef = useRef<HTMLDivElement | null>(null);
+
+  useGsap(() => {
+    const ctx = gsap.context(() => {
+      if (!heroRef.current) return;
+
+      const heroWords = heroWordsRef.current ? Array.from(heroWordsRef.current.children) : [];
+      const ctaButtons = ctaRef.current ? Array.from(ctaRef.current.children) : [];
+      const timeline = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      timeline
+        .fromTo(
+          heroRef.current,
+          { opacity: 0 },
+          { opacity: 1, duration: 0.8 }
+        )
+        .from(
+          navStripRef.current,
+          { opacity: 0, y: -18, duration: 0.7 },
+          "-=.6"
+        )
+        .from(
+          heroWords,
+          {
+            opacity: 0,
+            y: 24,
+            stagger: 0.1,
+            duration: 0.7,
+          },
+          "-.5"
+        )
+        .from(
+          heroCopyRef.current,
+          { opacity: 0, y: 28, duration: 0.75 },
+          "-=0.4"
+        )
+        .from(
+          ctaButtons,
+          { opacity: 0, y: 18, stagger: 0.08, duration: 0.6 },
+          "-=0.55"
+        );
+
+      if (floatRef.current) {
+        gsap.to(floatRef.current, {
+          x: 8,
+          y: 8,
+          duration: 5,
+          ease: "sine.inOut",
+          yoyo: true,
+          repeat: -1,
+          opacity: 0.85,
+        });
+      }
+
+      return () => timeline.kill();
+    }, heroRef);
+
+    return () => ctx.revert();
+  }, [], heroRef);
+
   useEffect(() => {
     const fmt = () =>
       new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: "Africa/Lagos" });
@@ -81,7 +147,7 @@ function Index() {
   return (
     <>
       {/* SECTION 1 — HERO */}
-      <section className="relative min-h-screen flex items-center pt-32 md:pt-40 pb-20 overflow-hidden scanline">
+      <section ref={heroRef} className="relative min-h-screen flex items-center pt-32 md:pt-40 pb-20 overflow-hidden scanline">
         {/* Subtle Cyber Grid Elements */}
         <div className="pointer-events-none absolute inset-0 cyber-grid opacity-[0.25]" />
         <div
@@ -95,7 +161,7 @@ function Index() {
 
         <div className="container-page relative w-full">
           {/* Header Strip inside Hero */}
-          <div className="flex items-center justify-between mb-16 md:mb-24 font-mono text-[0.68rem] text-muted-foreground uppercase tracking-widest border-b border-hairline pb-4">
+          <div ref={navStripRef} className="flex items-center justify-between mb-16 md:mb-24 font-mono text-[0.68rem] text-muted-foreground uppercase tracking-widest border-b border-hairline pb-4">
             <span className="flex items-center gap-2">
               <span className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
               Available for strategic advisory & development
@@ -104,7 +170,7 @@ function Index() {
           </div>
 
           {/* Bold, Stacked, Oversized Headline */}
-          <h1 className="display-xl tracking-tighter flex flex-col font-bold max-w-7xl leading-none">
+          <h1 ref={heroWordsRef} className="display-xl tracking-tighter flex flex-col font-bold max-w-7xl leading-none">
             <span className="block text-foreground"><SplitReveal text="BUILDING" /></span>
             <span className="block text-primary"><SplitReveal text="SECURE" /></span>
             <span className="block text-foreground"><SplitReveal text="DIGITAL" /></span>
@@ -113,40 +179,40 @@ function Index() {
 
           <div className="mt-14 md:mt-20 grid md:grid-cols-12 gap-8 items-end border-t border-hairline pt-10">
             <div className="md:col-span-6">
-              <Reveal delay={200}>
+              <div ref={heroCopyRef}>
                 <p className="text-sm font-mono text-muted-foreground/60 uppercase tracking-widest mb-3">
                   [ PRIMARY MISSION ]
                 </p>
                 <p className="text-lg md:text-xl text-muted-foreground leading-relaxed max-w-xl font-light">
                   Designing and developing secure web applications, business systems, and digital experiences for modern organizations that demand reliability, compliance, and scale.
                 </p>
-              </Reveal>
+              </div>
             </div>
             
             <div className="md:col-span-6 md:text-right">
-              <Reveal delay={400}>
-                <div className="flex flex-wrap md:justify-end items-center gap-4">
-                  <Link
-                    to="/contact"
-                    className="group inline-flex items-center gap-3 bg-primary text-primary-foreground rounded-full pl-7 pr-2 py-2 text-xs font-mono uppercase tracking-wider font-semibold hover:opacity-95 transition-all"
-                  >
-                    Start a Conversation
-                    <span className="w-9 h-9 rounded-full bg-primary-foreground text-primary inline-flex items-center justify-center transition-transform group-hover:rotate-45">
-                      <svg width="14" height="14" viewBox="0 0 12 12" fill="none">
-                        <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
-                    </span>
-                  </Link>
-                  <Link
-                    to="/work"
-                    className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-muted-foreground hover:text-foreground px-4 py-2 transition-colors border border-hairline rounded-full hover:bg-surface/40"
-                  >
-                    View Engagements
-                  </Link>
-                </div>
-              </Reveal>
+              <div ref={ctaRef} className="flex flex-wrap md:justify-end items-center gap-4">
+                <Link
+                  to="/contact"
+                  className="group inline-flex items-center gap-3 bg-primary text-primary-foreground rounded-full pl-7 pr-2 py-2 text-xs font-mono uppercase tracking-wider font-semibold hover:opacity-95 transition-all"
+                >
+                  Start a Conversation
+                  <span className="w-9 h-9 rounded-full bg-primary-foreground text-primary inline-flex items-center justify-center transition-transform group-hover:rotate-45">
+                    <svg width="14" height="14" viewBox="0 0 12 12" fill="none">
+                      <path d="M2.5 9.5L9.5 2.5M9.5 2.5H4M9.5 2.5V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </span>
+                </Link>
+                <Link
+                  to="/work"
+                  className="inline-flex items-center gap-2 text-xs font-mono uppercase tracking-wider text-muted-foreground hover:text-foreground px-4 py-2 transition-colors border border-hairline rounded-full hover:bg-surface/40"
+                >
+                  View Engagements
+                </Link>
+              </div>
             </div>
           </div>
+
+          <div ref={floatRef} className="pointer-events-none absolute right-0 bottom-10 w-40 h-40 rounded-full bg-gradient-to-tr from-primary/20 to-transparent blur-3xl opacity-80" />
         </div>
       </section>
 
@@ -262,12 +328,12 @@ function Index() {
             </div>
             
             <div className="md:col-span-8 grid sm:grid-cols-2 gap-px bg-hairline border border-hairline">
-              {services.map((s) => (
-                <div key={s.t} className="bg-background p-8 md:p-10 hover-card-premium">
+              {services.map((s, idx) => (
+                <CardReveal key={s.t} delay={idx * 80} className="bg-background p-8 md:p-10 hover-card-premium">
                   <p className="font-mono text-[0.62rem] text-primary tracking-widest uppercase mb-6">[ SOLUTION DEFINITION ]</p>
                   <h3 className="text-lg md:text-xl font-semibold uppercase tracking-tight">{s.t}</h3>
                   <p className="mt-3 text-xs text-muted-foreground leading-relaxed font-light">{s.d}</p>
-                </div>
+                </CardReveal>
               ))}
             </div>
           </div>
