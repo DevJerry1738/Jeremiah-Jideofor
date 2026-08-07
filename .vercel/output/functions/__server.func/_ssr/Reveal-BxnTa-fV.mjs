@@ -1,44 +1,49 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
-import { p as prefersReducedMotion } from "./router-CuEUZlIb.mjs";
+import { p as prefersReducedMotion } from "./router-BF4rO8wo.mjs";
+const isInViewport = (element) => {
+  const rect = element.getBoundingClientRect();
+  return rect.top < window.innerHeight && rect.bottom > 0;
+};
+function useReveal(ref, config) {
+  const threshold = config?.threshold ?? 0.12;
+  const rootMargin = config?.rootMargin ?? "0px 0px -12% 0px";
+  reactExports.useEffect(() => {
+    const element = ref.current;
+    if (!element) return;
+    const reveal = () => {
+      element.classList.add("reveal-visible");
+      element.classList.remove("reveal-hidden");
+    };
+    if (prefersReducedMotion) {
+      reveal();
+      return;
+    }
+    if (isInViewport(element)) {
+      reveal();
+      return;
+    }
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        reveal();
+        observer.disconnect();
+      },
+      {
+        threshold,
+        rootMargin
+      }
+    );
+    observer.observe(element);
+    return () => observer.disconnect();
+  }, [ref, threshold, rootMargin]);
+}
 function Reveal({
   children,
   delay = 0,
   className = ""
 }) {
   const ref = reactExports.useRef(null);
-  reactExports.useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const applyVisible = () => {
-      el.classList.add("reveal-visible");
-      el.classList.remove("reveal-hidden");
-    };
-    if (prefersReducedMotion) {
-      applyVisible();
-      return;
-    }
-    const isInViewport = (target) => {
-      const rect = target.getBoundingClientRect();
-      return rect.top < window.innerHeight && rect.bottom > 0;
-    };
-    if (isInViewport(el)) {
-      applyVisible();
-      return;
-    }
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        applyVisible();
-        observer.disconnect();
-      },
-      {
-        threshold: 0.12,
-        rootMargin: "0px 0px -10% 0px"
-      }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [delay]);
+  useReveal(ref, { threshold: 0.12, rootMargin: "0px 0px -10% 0px" });
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
     {
@@ -56,19 +61,19 @@ function SplitReveal({ text, className = "" }) {
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
+      ([entry]) => {
+        if (entry.isIntersecting) {
           setVisible(true);
           io.disconnect();
         }
       },
-      { threshold: 0.2 }
+      { threshold: 0.15, rootMargin: "0px 0px -18% 0px" }
     );
     io.observe(el);
     return () => io.disconnect();
   }, []);
   const words = text.split(" ");
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { ref, className, children: words.map((w, i) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "inline-block overflow-hidden align-bottom mr-[0.25em]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { ref, className, "aria-hidden": "true", children: words.map((w, i) => /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "inline-block overflow-hidden align-bottom mr-[0.25em]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
     "span",
     {
       className: "inline-block",
@@ -82,5 +87,6 @@ function SplitReveal({ text, className = "" }) {
 }
 export {
   Reveal as R,
-  SplitReveal as S
+  SplitReveal as S,
+  useReveal as u
 };

@@ -17,7 +17,7 @@ import "crypto";
 import "async_hooks";
 import "stream";
 import "../_libs/isbot.mjs";
-const appCss = "/assets/styles-snhkMX5p.css";
+const appCss = "/assets/styles-DHVcArSE.css";
 function reportLovableError(error, context = {}) {
   if (typeof window === "undefined") return;
   window.__lovableEvents?.captureException?.(
@@ -98,10 +98,10 @@ function SiteHeader() {
             {
               to: l.to,
               className: "px-4 py-2 text-xs font-mono uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors relative group",
-              activeProps: { className: "text-foreground font-semibold" },
+              activeProps: { className: "text-foreground font-semibold active" },
               children: [
                 l.label,
-                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "absolute bottom-1 left-4 right-4 h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" })
+                /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "nav-link-indicator absolute bottom-1 left-4 right-4 h-px bg-primary origin-left scale-x-0 transition-transform duration-300" })
               ]
             },
             l.to
@@ -273,6 +273,42 @@ function SiteFooter() {
     ] })
   ] });
 }
+function ScrollProgress() {
+  const barRef = reactExports.useRef(null);
+  reactExports.useEffect(() => {
+    let frame = 0;
+    const update = () => {
+      const scrollTop = window.scrollY;
+      const height = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = height > 0 ? Math.min(100, Math.max(0, scrollTop / height * 100)) : 0;
+      if (barRef.current) {
+        barRef.current.style.width = `${progress}%`;
+      }
+      frame = 0;
+    };
+    const onScroll = () => {
+      if (!frame) {
+        frame = window.requestAnimationFrame(update);
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    update();
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) {
+        window.cancelAnimationFrame(frame);
+      }
+    };
+  }, []);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed inset-x-0 top-0 h-1 pointer-events-none z-[60] bg-transparent", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+    "div",
+    {
+      ref: barRef,
+      className: "h-full bg-primary/90 shadow-[0_0_18px_rgba(234,179,8,0.22)] transition-[width] duration-150 ease-out",
+      style: { width: "0%" }
+    }
+  ) });
+}
 function NotFoundComponent() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "flex min-h-screen items-center justify-center bg-background px-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-md text-center", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "text-7xl font-bold text-foreground", children: "404" }),
@@ -357,13 +393,16 @@ function RootShell({ children }) {
 }
 function RootComponent() {
   const { queryClient } = Route$a.useRouteContext();
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-h-screen flex flex-col bg-background text-foreground", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx(SiteHeader, {}),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: "flex-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Outlet, {}) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx(SiteFooter, {})
-  ] }) });
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs(QueryClientProvider, { client: queryClient, children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx(ScrollProgress, {}),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-h-screen flex flex-col bg-background text-foreground", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(SiteHeader, {}),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("main", { className: "flex-1", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Outlet, {}) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(SiteFooter, {})
+    ] })
+  ] });
 }
-const $$splitComponentImporter$8 = () => import("./work-CkIAYz5f.mjs");
+const $$splitComponentImporter$8 = () => import("./work-pZKYx2TE.mjs");
 const Route$9 = createFileRoute("/work")({
   head: () => ({
     meta: [{
@@ -420,7 +459,7 @@ const Route$8 = createFileRoute("/sitemap.xml")({
     }
   }
 });
-const $$splitComponentImporter$7 = () => import("./services-q0urmyQK.mjs");
+const $$splitComponentImporter$7 = () => import("./services-DObvf6VE.mjs");
 const Route$7 = createFileRoute("/services")({
   head: () => ({
     meta: [{
@@ -445,7 +484,7 @@ const Route$7 = createFileRoute("/services")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$7, "component")
 });
-const $$splitComponentImporter$6 = () => import("./insights-mckZtoVQ.mjs");
+const $$splitComponentImporter$6 = () => import("./insights-DrRo4Bvo.mjs");
 const Route$6 = createFileRoute("/insights")({
   head: () => ({
     meta: [{
@@ -470,7 +509,7 @@ const Route$6 = createFileRoute("/insights")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$6, "component")
 });
-const $$splitComponentImporter$5 = () => import("./contact-BqVFoJtb.mjs");
+const $$splitComponentImporter$5 = () => import("./contact-D_WVdkl1.mjs");
 const Route$5 = createFileRoute("/contact")({
   head: () => ({
     meta: [{
@@ -495,7 +534,7 @@ const Route$5 = createFileRoute("/contact")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$5, "component")
 });
-const $$splitComponentImporter$4 = () => import("./about-DwVW226N.mjs");
+const $$splitComponentImporter$4 = () => import("./about-Di860qB9.mjs");
 const Route$4 = createFileRoute("/about")({
   head: () => ({
     meta: [{
@@ -520,7 +559,7 @@ const Route$4 = createFileRoute("/about")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$4, "component")
 });
-const $$splitComponentImporter$3 = () => import("./index-Dr9JLIzZ.mjs");
+const $$splitComponentImporter$3 = () => import("./index-Dr2wwOJk.mjs");
 const Route$3 = createFileRoute("/")({
   head: () => ({
     meta: [{
@@ -545,7 +584,7 @@ const Route$3 = createFileRoute("/")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$3, "component")
 });
-const $$splitComponentImporter$2 = () => import("./insights.replacing-spreadsheets-C40GDzn-.mjs");
+const $$splitComponentImporter$2 = () => import("./insights.replacing-spreadsheets-UhMffWlW.mjs");
 const Route$2 = createFileRoute("/insights/replacing-spreadsheets")({
   head: () => ({
     meta: [{
@@ -570,7 +609,7 @@ const Route$2 = createFileRoute("/insights/replacing-spreadsheets")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$2, "component")
 });
-const $$splitComponentImporter$1 = () => import("./insights.least-privilege-J8oXM3rU.mjs");
+const $$splitComponentImporter$1 = () => import("./insights.least-privilege-B-_EkkfS.mjs");
 const Route$1 = createFileRoute("/insights/least-privilege")({
   head: () => ({
     meta: [{
@@ -595,7 +634,7 @@ const Route$1 = createFileRoute("/insights/least-privilege")({
   }),
   component: lazyRouteComponent($$splitComponentImporter$1, "component")
 });
-const $$splitComponentImporter = () => import("./insights.edge-delivery-security-WTIxjBAe.mjs");
+const $$splitComponentImporter = () => import("./insights.edge-delivery-security-BAocyeM0.mjs");
 const Route = createFileRoute("/insights/edge-delivery-security")({
   head: () => ({
     meta: [{

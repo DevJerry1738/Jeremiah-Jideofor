@@ -1,7 +1,7 @@
 import { r as reactExports, j as jsxRuntimeExports } from "../_libs/react.mjs";
 import { L as Link } from "../_libs/tanstack__react-router.mjs";
-import { S as SplitReveal, R as Reveal } from "./Reveal-nQ7I0g0P.mjs";
-import { u as useGsap, p as prefersReducedMotion } from "./router-CuEUZlIb.mjs";
+import { S as SplitReveal, R as Reveal, u as useReveal } from "./Reveal-BxnTa-fV.mjs";
+import { u as useGsap } from "./router-BF4rO8wo.mjs";
 import { g as gsapWithCSS } from "../_libs/gsap.mjs";
 import "../_libs/gsap__react.mjs";
 import "../_libs/tanstack__router-core.mjs";
@@ -25,39 +25,7 @@ function CardReveal({
   delay = 0
 }) {
   const ref = reactExports.useRef(null);
-  reactExports.useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const applyVisible = () => {
-      el.classList.add("reveal-visible");
-      el.classList.remove("reveal-hidden");
-    };
-    if (prefersReducedMotion) {
-      applyVisible();
-      return;
-    }
-    const isInViewport = (target) => {
-      const rect = target.getBoundingClientRect();
-      return rect.top < window.innerHeight && rect.bottom > 0;
-    };
-    if (isInViewport(el)) {
-      applyVisible();
-      return;
-    }
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (!entry.isIntersecting) return;
-        applyVisible();
-        observer.disconnect();
-      },
-      {
-        threshold: 0.15,
-        rootMargin: "0px 0px -10% 0px"
-      }
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [delay]);
+  useReveal(ref, { threshold: 0.15, rootMargin: "0px 0px -12% 0px" });
   return /* @__PURE__ */ jsxRuntimeExports.jsx(
     "div",
     {

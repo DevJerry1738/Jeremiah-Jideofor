@@ -76,10 +76,10 @@ export function SiteHeader() {
               key={l.to}
               to={l.to}
               className="px-4 py-2 text-xs font-mono uppercase tracking-wider text-muted-foreground hover:text-foreground transition-colors relative group"
-              activeProps={{ className: "text-foreground font-semibold" }}
+              activeProps={{ className: "text-foreground font-semibold active" }}
             >
               {l.label}
-              <span className="absolute bottom-1 left-4 right-4 h-px bg-primary scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
+              <span className="nav-link-indicator absolute bottom-1 left-4 right-4 h-px bg-primary origin-left scale-x-0 transition-transform duration-300" />
             </Link>
           ))}
         </nav>

@@ -225,9 +225,21 @@
   &:hover {
     border-color: rgba(234, 179, 8, 0.25);
     background-color: var(--color-surface-elevated);
-    transform: translateY(-2px) scale(1.01);
-    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.12);
+    transform: translateY(-2px) scale(1.005);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.10);
   }
+}
+
+.nav-link-indicator {
+  transform-origin: left;
+}
+
+.nav-link-indicator.scale-x-100 {
+  transform: scaleX(1);
+}
+
+.active .nav-link-indicator {
+  transform: scaleX(1);
 }
 
 /* Article Prose Code Blocks */
