@@ -27,7 +27,8 @@ const featuredProjects = [
     challenge: "The Nigeria Union of Teachers had an outdated legacy website with no content management system, poor authentication infrastructure, no member engagement tools, and outdated technology stack. The organization represents 500k+ teachers across Nigeria's 36 states and needed a modern digital presence.",
     approach: "Architected a modern full-stack platform migrating from legacy MySQL to PostgreSQL (Supabase), implemented self-managed Supabase Auth replacing third-party OAuth, built a comprehensive Admin Dashboard with content management, and designed responsive UI with GSAP animations for engagement.",
     execution: "Built with React 19, TypeScript, Vite, TailwindCSS, shadcn/ui, Supabase, tRPC, and GSAP. Implemented Row-Level Security (RLS) policies, blog/news system, member join flow, newsletter subscriptions, support ticket submission, and full analytics dashboard.",
-    impact: "Delivered a modern, animated platform serving 500k+ teachers with admin dashboard enabling content management without developer intervention. Features live news ticker, event management, and real-time member engagement. Live at nutng.org.",
+    impact: "Delivered a modern, animated platform serving 500k+ teachers with admin dashboard enabling content management without developer intervention. Features live news ticker, event management, and real-time member engagement. Live at",
+    impactLink: { url: "https://nutng.org", label: "nutng.org" },
   },
   {
     n: "02",
@@ -36,7 +37,8 @@ const featuredProjects = [
     challenge: "YIRH had no digital presence to showcase research publications, team members, or accept member applications. The organization needed independent content management without requiring developer intervention for each update.",
     approach: "Designed a headless CMS architecture combining a public-facing website with a secure Admin Dashboard. Implemented Supabase Auth with role-based access (Admin/Editor), database-level Row-Level Security, and a multi-tab dashboard for content management.",
     execution: "Built with React 19, TypeScript, Vite, TailwindCSS, Supabase, React Query (7 custom hooks), and GSAP animations. Implemented Docker + Nginx containerization, 8-table PostgreSQL schema with 12+ RLS policies, file storage for publications and avatars, and markdown-based rich text editing.",
-    impact: "Delivered a fully functional CMS allowing non-technical staff to independently manage publications, team profiles, blog posts, and applications. Provides secure role-based access, beautiful animations, light/dark theme support, and production-ready deployment. Live at youthinresearchhub.org.",
+    impact: "Delivered a fully functional CMS allowing non-technical staff to independently manage publications, team profiles, blog posts, and applications. Provides secure role-based access, beautiful animations, light/dark theme support, and production-ready deployment. Live at",
+    impactLink: { url: "https://youthinresearchhub.org", label: "youthinresearchhub.org" },
   },
   {
     n: "03",
@@ -45,7 +47,8 @@ const featuredProjects = [
     challenge: "Phishing attacks are the leading entry point for corporate data breaches, yet traditional static security training lacks real-world impact. Organizations needed interactive testing to identify vulnerable employees and provide immediate, targeted training during the critical 'teachable moment.'",
     approach: "Created an interactive phishing simulation platform enabling organizations to run safe mock-phishing campaigns with individual click tracking, immediate educational intervention, and comprehensive performance analytics. Implemented role-based access for Admins, Analysts, and Viewers.",
     execution: "Built with React.js, Node.js/Express, MongoDB, JWT authentication, and bcrypt password hashing. Features campaign management, multi-scenario email templates, unique tracking URLs, real-time click analytics, just-in-time training videos, and standard CSV exports.",
-    impact: "A fully functional security awareness platform demonstrating how active testing combined with immediate feedback elevates organizational security posture. Successfully implemented as a core Master's research project at the Nigerian Defence Academy. Open-source on GitHub (github.com/DevJerry1738/phishing-simulator).",
+    impact: "A fully functional security awareness platform demonstrating how active testing combined with immediate feedback elevates organizational security posture. Successfully implemented as a core Master's research project at the Nigerian Defence Academy. Open-source on GitHub",
+    impactLink: { url: "https://github.com/DevJerry1738/phishing-simulator", label: "github.com/DevJerry1738/phishing-simulator" },
   },
 ];
 
@@ -301,7 +304,15 @@ function Index() {
                     </div>
                     <div className="border-t border-primary/20 pt-4 bg-primary/5 p-4 rounded">
                       <p className="eyebrow text-primary mb-2">Business Impact</p>
-                      <p className="text-sm text-foreground leading-relaxed font-medium">{p.impact}</p>
+                      <p className="text-sm text-foreground leading-relaxed font-medium">
+                        {p.impact}{" "}
+                        {p.impactLink ? (
+                          <a href={p.impactLink.url} target="_blank" rel="noreferrer" className="text-primary hover:text-primary/80 underline">
+                            {p.impactLink.label}
+                          </a>
+                        ) : null}
+                        .
+                      </p>
                     </div>
                   </div>
                 </div>

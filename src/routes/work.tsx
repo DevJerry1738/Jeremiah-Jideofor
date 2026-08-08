@@ -30,7 +30,8 @@ const projects = [
     design: "Crafted responsive layouts with GSAP scroll-triggered animations, live news ticker, event carousel, and animated statistics counters. Designed clean admin dashboard with intuitive navigation for non-technical staff managing blogs, events, and member applications.",
     development: "Built with React 19, TypeScript, Vite, TailwindCSS, shadcn/ui, Supabase, tRPC, and GSAP. Implemented 8-table database schema with Row-Level Security policies, blog/news management system, event scheduling, member join flow with email verification, and newsletter subscription handling.",
     security: "Implemented Supabase Auth with email/password and OAuth (Google/GitHub) support. Row-Level Security policies enforce database-level access control. JWT tokens over HTTP-only cookies. Admin dashboard protected behind role-based access control. Newsletter submissions validated with Zod schemas.",
-    outcome: "Delivered a modern, animated platform serving 500k+ teachers with independent admin dashboard enabling content management without developer involvement. Live news ticker automatically fetches from database with fallback to static content. Event management and member engagement tools functional. Platform live at nutng.org with positive reception from organizational leadership.",
+    outcome: "Delivered a modern, animated platform serving 500k+ teachers with independent admin dashboard enabling content management without developer involvement. Live news ticker automatically fetches from database with fallback to static content. Event management and member engagement tools functional. Platform live at",
+    outcomeLink: { url: "https://nutng.org", label: "nutng.org" },
     lessons: "Content management independence is critical for organizational adoption. Building feature flags and fallback systems ensures graceful degradation when content is missing. GSAP animations significantly improve perceived performance and user engagement on educational platforms.",
     stack: ["React 19", "TypeScript", "Vite", "Supabase", "PostgreSQL", "TailwindCSS", "GSAP", "tRPC", "Row-Level Security"]
   },
@@ -47,7 +48,8 @@ const projects = [
     design: "Created beautiful, animated public interface with hero section, publication showcase, team directory with department filtering, and blog with category navigation. Designed 8-tab Admin Dashboard with intuitive content management, file uploads, preview functionality, and WYSIWYG editing.",
     development: "Built with React 19, TypeScript, Vite, Supabase, React Query (7 custom hooks for data management), Markdown editor integration, GSAP animations, and Docker containerization. 8-table PostgreSQL schema with 12+ performance indexes and RLS policies. File storage for publications and avatars via Supabase Storage.",
     security: "Supabase Auth with role-based access control (user/editor/admin). 12+ Row-Level Security policies enforcing access at database level. Protected routes with role validation. Multi-bucket file storage separation. Zod validation for all form inputs. Dark mode theme toggle persisted securely.",
-    outcome: "Delivered fully functional CMS enabling YIRH staff to independently manage publications, team profiles, blog posts, and join applications. Secure role-based access prevents unauthorized modifications. Beautiful animations and light/dark theme support create professional research-focused interface. Production-ready with Docker containerization and Nginx reverse proxy configuration.",
+    outcome: "Delivered fully functional CMS enabling YIRH staff to independently manage publications, team profiles, blog posts, and join applications. Secure role-based access prevents unauthorized modifications. Beautiful animations and light/dark theme support create professional research-focused interface. Production-ready with Docker containerization and Nginx reverse proxy configuration. Platform live at",
+    outcomeLink: { url: "https://youthinresearchhub.org", label: "youthinresearchhub.org" },
     lessons: "Supabase-native architecture eliminates backend complexity while maintaining security. Migrating from Hono/tRPC to React Query hooks reduced backend code by 30% while improving developer experience. Database-level security policies provide defense-in-depth that UI controls alone cannot guarantee.",
     stack: ["React 19", "TypeScript", "Supabase", "PostgreSQL", "React Query", "GSAP", "Markdown Editor", "Docker", "Row-Level Security", "TailwindCSS"]
   },
@@ -64,7 +66,8 @@ const projects = [
     design: "Admin interface for campaign creation with template selection and target group configuration. Clean dashboard displaying real-time click metrics per department. Employee landing page with clear warning message and embedded training content. Reports interface with filtering and CSV download functionality.",
     development: "Built with React.js frontend, Node.js/Express backend, MongoDB for data persistence. Implemented campaign logic generating unique tracking URLs, click handler that captures metadata without storing credentials, real-time analytics calculation, and JWT-based session management.",
     security: "Strict role-based access control preventing unauthorized campaign creation or data viewing. JWT authentication with secure token refresh. Tracking URLs designed to capture clicks without harvesting credentials or passwords. MongoDB data validation at API layer. Bcrypt password hashing for admin accounts.",
-    outcome: "Fully functional security awareness platform successfully implemented as core Master's research project at Nigerian Defence Academy Postgraduate School. Demonstrates effectiveness of active phishing testing combined with immediate feedback in improving organizational security posture. Validated through academic evaluation and deployed for institutional use.",
+    outcome: "Fully functional security awareness platform successfully implemented as core Master's research project at Nigerian Defence Academy Postgraduate School. Demonstrates effectiveness of active phishing testing combined with immediate feedback in improving organizational security posture. Validated through academic evaluation and deployed for institutional use. Open-source on GitHub",
+    outcomeLink: { url: "https://github.com/DevJerry1738/phishing-simulator", label: "github.com/DevJerry1738/phishing-simulator" },
     lessons: "The 'teachable moment' immediately after a security failure is critical for behavioral change. Systems that capture failure data while providing immediate education are far more effective than post-hoc training sessions weeks later. Tracking mechanisms must never harvest credentials—the platform's value is awareness, not credential theft.",
     stack: ["React.js", "Node.js", "Express", "MongoDB", "JWT", "Bcrypt", "RBAC", "Real-time Analytics", "Email Integration"]
   }
@@ -195,7 +198,15 @@ function WorkPage() {
                   <div className="grid sm:grid-cols-2 gap-10 border-t border-hairline pt-10">
                     <div className="border border-emerald-500/20 bg-emerald-500/5 p-4 rounded">
                       <p className="eyebrow text-emerald-500 border-b border-emerald-500/10 pb-2 mb-3">08 / MEASURABLE OUTCOME</p>
-                      <p className="text-sm text-foreground leading-relaxed font-medium">{p.outcome}</p>
+                      <p className="text-sm text-foreground leading-relaxed font-medium">
+                        {p.outcome}{" "}
+                        {p.outcomeLink ? (
+                          <a href={p.outcomeLink.url} target="_blank" rel="noreferrer" className="text-primary hover:text-primary/80 underline">
+                            {p.outcomeLink.label}
+                          </a>
+                        ) : null}
+                        .
+                      </p>
                     </div>
                     <div>
                       <p className="eyebrow border-b border-hairline pb-2 mb-3">09 / RETROSPECTIVE LESSONS</p>
